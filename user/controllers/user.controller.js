@@ -23,7 +23,11 @@ export const register = async (req, res) => {
 
     res.cookie("userToken", token);
 
-    res.send({ message: "User registered successfully" });
+    res.send({
+      message: "User registered successfully",
+      newUser,
+      userToken: token,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -81,6 +85,4 @@ export const profile = async (req, res) => {
   }
 };
 
-export const acceptedRide = async (req, res) => {
-    
-}
+export const acceptedRide = async (req, res) => {};
