@@ -23,6 +23,8 @@ export const register = async (req, res) => {
 
     res.cookie("userToken", token);
 
+    delete newUser._doc.password;
+
     res.send({
       message: "User registered successfully",
       newUser,
