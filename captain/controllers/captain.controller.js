@@ -2,7 +2,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { captainModel } from "../models/captain.model.js";
 import { blacklisttokenModel } from "../models/blacklisttoken.model.js";
-import { subscribeToQueue } from "../service/rabbit.js";
+import { publishToQueue, subscribeToQueue } from "../service/rabbit.js";
+
+const pendingRequests = [];
 
 export const register = async (req, res) => {
   try {
@@ -99,7 +101,24 @@ export const toggleAvailability = async (req, res) => {
   }
 };
 
+export const waitForNewRide = async (req, res) => {
+  // Set timeout for long polling (e.g., 30 seconds)
+  req.setTimeout(30000, () => {
+    res.status(204).end(); // No Content
+  });
+
+  // Add the response object to the pendingRequests array
+  pendingRequests.push(res);
+};
 
 // subscribeToQueue("new-ride", (data) => {
-//   console.log(JSON.parse(data));
+//   const rideData = JSON.parse(data);
+
+//   // Send the new ride data to all pending requests
+//   pendingRequests.forEach((res) => {
+//     res.json(rideData);
+//   });
+
+//   // Clear the pending requests
+//   pendingRequests.length = 0;
 // });

@@ -3,14 +3,9 @@ import amqp from "amqplib";
 let connection, channel;
 
 const connectRabbit = async () => {
-  try {
-    connection = await amqp.connect(process.env.RABBIT_URL);
-    channel = await connection.createChannel();
-    console.log("Connected to RabbitMQ");
-  } catch (error) {
-    console.error("Failed to connect to RabbitMQ:", error);
-    process.exit(1);
-  }
+  connection = await amqp.connect(process.env.RABBIT_URL);
+  channel = await connection.createChannel();
+  console.log("Connected to RabbitMQ");
 };
 
 const subscribeToQueue = async (queueName, callback) => {
