@@ -6,7 +6,8 @@ import cookieParser from "cookie-parser";
 import connect from "./db/db.js";
 connect();
 import rideRouter from "./routes/ride.routes.js";
-import { connect as connectRabbit } from "./service/rabbit.js";
+import { connectRabbit } from "./service/rabbit.js";
+
 connectRabbit();
 
 app.use(express.json());
