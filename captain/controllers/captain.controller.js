@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { captainModel } from "../models/captain.model.js";
 import { blacklisttokenModel } from "../models/blacklisttoken.model.js";
+import { subscribeToQueue } from "../service/rabbit.js";
 
 export const register = async (req, res) => {
   try {
@@ -97,3 +98,8 @@ export const toggleAvailability = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+// subscribeToQueue("new-ride", (data) => {
+//   console.log(JSON.parse(data));
+// });

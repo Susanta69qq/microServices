@@ -88,3 +88,4 @@ export const profile = async (req, res) => {
 };
 
 export const acceptedRide = async (req, res) => {};
+

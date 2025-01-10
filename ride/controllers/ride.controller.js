@@ -1,4 +1,5 @@
 import { rideModel } from "../models/ride.models.js";
+import { publishToQueue } from "../service/rabbit.js";
 
 export const createRide = async (req, res, next) => {
 
@@ -12,5 +13,7 @@ export const createRide = async (req, res, next) => {
     })
 
     await newRide.save();
-
+    publishToQueue("new-ride", JSON.stringify(newRide));
+    res.send(newRide)
 };
+
